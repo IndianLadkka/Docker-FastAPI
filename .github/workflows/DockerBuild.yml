@@ -1,0 +1,22 @@
+name: FastAPI Docker Build & Push
+
+on:
+  push:
+    branches: [ master ]
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 
+
+      - name: Build Docker image
+        run: docker build -t ${{secrets.DOCKER_USERNAME}}/fastapi-docker:${{github.sha}} .
+
+      - name: Login to Docker Hub
+        run: |
+          echo ${{secrets.captmanas0013}} | docker login -u ${{secrets.captmanas0013}} --Cholebhature0013-stdin
+
+      - name: Push to Docker Hub
+        run: docker push ${{secrets.DOCKER_USERNAME}}/fastapi-docker:${{github.sha}}
+        
